@@ -68,7 +68,7 @@ namespace BT2_LTDT
                 else
                 {
                     bool a = false;
-                    //v = -1 có 2 trường hợp hết đường hoặc không liên thông
+                    //v = -1 có 2 trường hợp hết đường hoặc start và goal không liên thông
                     for (int i = 0; i < AM.n; i++)
                     {
                         if (AM.viengTham[i] == true)
@@ -119,16 +119,39 @@ namespace BT2_LTDT
             //dùng mảng thay cho queue, dauHangDoi dùng để duyệt phần tử đầu hàng đợi
             int[] hangDoi = new int[AM.n];
             int dauHangDoi = 0;
-            int v = 0;
+            int v = 0; //
             hangDoi[v] = u;
             AM.viengTham[u] = true;
             Console.Write($"{u} ");
             while (true)
             {
-                if (AM.viengTham[AM.goal] == true)
+                //kiểm tra xem có còn đường đi từ đỉnh đã duyệt tới đỉnh chưa duyệt hay không
+                bool kiemtra = false;
+                for (int i = 0; i < AM.n; i++)
+                {
+                    if (AM.viengTham[i] == true)
+                    {
+                        for (int j = 0; j < AM.n; j++)
+                        {
+                            if (AM.viengTham[j] == false)
+                            {   
+                                if (AM.maTran[i, j] == 1)
+                                {
+                                    kiemtra = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+                if(kiemtra == false)
                 {
                     break;
                 }
+                if (AM.viengTham[AM.goal] == true)
+                {
+                    break;
+                } 
                 else
                 {
                     int a = hangDoi[v];
@@ -237,20 +260,17 @@ namespace BT2_LTDT
                 duongDi(AM);
                 */
 
-
-                /*
                 //Câu b:
                 Console.WriteLine("Danh sách đỉnh đã duyệt theo thứ tự:");
                 BFS(AM, AM.start);
                 Console.WriteLine();
                 duongDi(AM);
-                */
-
-
+                
+                /*
                 //Câu c:
                 Console.WriteLine($"Số thành phần liên thông: {demSoThanhPhanLienThong(AM)}");
                 inThanhPhanLienThong(AM);
-
+                */
             }
         }
     }
